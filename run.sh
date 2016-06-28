@@ -1,0 +1,1 @@
+java -jar target/feel-dns-1.0-SNAPSHOT

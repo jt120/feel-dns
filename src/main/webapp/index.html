@@ -1,0 +1,69 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Feel DNS</title>
+
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/grid.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header">
+        <h1>Feel DNS</h1>
+
+        <p class="lead">有感知的DNS服务器[<a href="http://gitlab.corp.qunar.com/ze.liu/feel-dns">Gitlab</a>]
+        </p>
+    </div>
+
+    <div class="row">
+        <h3>修改本地hosts</h3>
+
+        <div>
+            <form action="#" id="change_form" class="form-horizontal">
+                <div>
+                    <textarea class="form-control" rows="10" id="hosts" name="hosts"></textarea>
+                </div>
+            </form>
+
+            <p>
+                <button id="change_hosts" class="btn btn-default">提交</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="/resources/js/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $.ajax({
+            url: "/hosts/show",
+            success: function (data) {
+                if (data.length != 0) {
+                    $("#hosts").val(JSON.stringify(data, null, 2));
+                }
+            }
+        });
+
+
+        $("#change_hosts").click(function () {
+            $.ajax({
+                url: "/hosts/change",
+                type: "post",
+                data: $("#hosts").val(),
+                contentType: "application/json",
+                success: function (data) {
+                    alert(JSON.stringify(data, null, 2))
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>
